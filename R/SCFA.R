@@ -1,18 +1,19 @@
-# sapply(c("caron/asCrit.R",
-#          "caron/linkage.R",
-#          "caron/asDistances.R",
-#          "caron/asOrphelines.R",
-#          "caron/asTuples.R",
-#          "caron/asPairesIndicatrices.R",
-#          "caron/asGrappes.R",
-#          "caron/asCoplanaire.R",
-#          "caron/asSatPaire.R",
-#          "caron/asSaturations.R",
-#          "caron/asVariableMulti.R",
-#          "caron/asCorrFct.R",
-#          "caron/asMultiSatur.R"),
-#        source)
-# R <- round(Rnest::ex_3factors_doub_unique, 2)
+sapply(c("R/asCrit.R",
+         "R/linkage.R",
+         "R/asDistances.R",
+         "R/asOrphelines.R",
+         "R/asTuples.R",
+         "R/asPairesIndicatrices.R",
+         "R/asGrappes.R",
+         "R/asCoplanaire.R",
+         "R/asSatPaire.R",
+         "R/asSaturations.R",
+         "R/asVariableMulti.R",
+         "R/asCorrFct.R",
+         "R/asMultiSatur.R"),
+       source)
+R <- round(Rnest::ex_3factors_doub_unique, 3)
+R <- round(Rnest::ex_4factors_corr, 3)
 
 SCFA <- function(R, N = NULL){
   if(is.null(N)){

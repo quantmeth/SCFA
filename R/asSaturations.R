@@ -25,7 +25,7 @@ asSaturations <- function(AS){
     }
     # if(any(v<0)) AS$pertinentes[AS$pertinentes == 0]) # What ??
     AS$satur[gr] <- list(satur)
-    if(nrow(satur) > 1) satur <- mean(satur)
+    if(nrow(satur) > 1) satur <- colMeans(satur)
     
     if(sum(satur) < 0)  satur <- -satur
     
