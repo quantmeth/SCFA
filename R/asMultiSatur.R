@@ -5,7 +5,7 @@ asMultiSatur <- function(AS, np, alpha = .05){
     nc <- nrow(C)
     Crit <- matrix(0, nc, 1)
     Corr <- matrix(0, nv, nc)
-    P <- matrix(0, nc, np)
+    P <- matrix(0, nc, 2) #np
     G <- AS$GS
     prob <- matrix(0, nc, 1)
     
