@@ -1,5 +1,5 @@
 asPairesIndicatrices <- function(AS){
-  AS$Cpaires <- t(combn(1:AS$nv, 2))
+  AS$Cpaires <- t(combn(AS$pertinentes, 2))
   nc <- nrow(AS$Cpaires)
   AS$Crit <- matrix(0, nc, 1)
   AS$Corr <- matrix(0, AS$nv, nc)

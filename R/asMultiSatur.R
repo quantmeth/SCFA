@@ -53,7 +53,7 @@ asMultiSatur <- function(AS, np, alpha = .05){
         }
         po <- t(CritTuple ^ (-2))
         po <- po/sum(po)
-        AS$Fct[AS$reste[1],gd] <- po %*% saturTuple
+        AS$Fct[AS$reste[1], gd] <- po %*% saturTuple
         AS$reste <- AS$reste[-1]
       } else {
         AS$reste <- c(AS$reste[-1], -AS$reste[[1]])

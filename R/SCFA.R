@@ -1,19 +1,19 @@
-sapply(c("R/asCrit.R",
-         "R/linkage.R",
-         "R/asDistances.R",
-         "R/asOrphelines.R",
-         "R/asTuples.R",
-         "R/asPairesIndicatrices.R",
-         "R/asGrappes.R",
-         "R/asCoplanaire.R",
-         "R/asSatPaire.R",
-         "R/asSaturations.R",
-         "R/asVariableMulti.R",
-         "R/asCorrFct.R",
-         "R/asMultiSatur.R"),
-       source)
-R <- round(Rnest::ex_3factors_doub_unique, 3)
-R <- round(Rnest::ex_4factors_corr, 3)
+# sapply(c("R/asCrit.R",
+#          "R/linkage.R",
+#          "R/asDistances.R",
+#          "R/asOrphelines.R",
+#          "R/asTuples.R",
+#          "R/asPairesIndicatrices.R",
+#          "R/asGrappes.R",
+#          "R/asCoplanaire.R",
+#          "R/asSatPaire.R",
+#          "R/asSaturations.R",
+#          "R/asVariableMulti.R",
+#          "R/asCorrFct.R",
+#          "R/asMultiSatur.R"),
+#        source)
+# R <- round(Rnest::ex_3factors_doub_unique, 3)
+# R <- round(Rnest::ex_4factors_corr, 3)
 
 SCFA <- function(R, N = NULL){
   if(is.null(N)){
@@ -41,3 +41,8 @@ SCFA <- function(R, N = NULL){
   AS$reprodR <- AS$Fct %*% AS$CorFct %*% t(AS$Fct)
   return(AS)
 }
+# R <- Rnest::ex_4factors_corr
+# R <- Rnest::ex_
+# a <- SCFA(R, 120)
+# a$ng
+# a$Fct

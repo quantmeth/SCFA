@@ -3,6 +3,7 @@ asCrit <- function(p, G, combine, cible = NULL, to.opt = TRUE){
     v <- ncol(G)
     cible <- which(!(1:v) %in% combine)
   }
+  #p <- mean(p)
   p <- c(p, -1)
   SP <- G[, combine] %*% p
   SP <- SP / c(sqrt(t(SP) %*% SP))
