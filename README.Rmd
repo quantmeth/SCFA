@@ -1,0 +1,118 @@
+---
+output: github_document
+bibliography: "inst/ma.bib"
+csl: "inst/apa.csl"
+---
+
+```{r setup, include = FALSE, warning=FALSE, comment = FALSE}
+library(Rnest)
+library(SCFA)
+write_matex <- function(x) {
+  begin <- "$$\\begin{bmatrix}"
+  end <- "\\end{bmatrix}$$"
+  X <-
+    apply(x, 1, function(x) {
+      paste(
+        paste(x, collapse = "&"),
+        "\\\\"
+      )
+    })
+  writeLines(c(begin, X, end))
+}
+library(htmltools)
+knitr::opts_chunk$set(
+  fig.align = "center"
+)
+knitr::knit_hooks$set(imgcenter = function(before, options, envir){
+  if (before) {
+    HTML("<p align='center'>")
+  } else {
+    HTML("</p>")
+  }
+})
+```
+
+# SCFA: Signal Cancelling Factor Analysis
+
+The library `SCFA` is an **R** implementation of the Signal Cancelling Factor Analysis (SCFA) developped by André Achim (https://osf.io/preprints/psyarxiv/h7qwg). It provides a main function `SCFA()` to carry the analysis. Currently in development.
+
+# Installation
+
+The development version can be accessed through GitHub:
+
+```{r, echo = TRUE, eval = FALSE}
+remotes::install_github(repo = "quantmeth/SCFA")
+library(SCFA)
+```
+
+# Examples
+
+Here is an example using the `ex_4factors_corr` correlation matrix from the `Rnest` library. The factor structure is
+
+```{r factstruct, echo = FALSE, out.height="50%", out.width="50%", imgcenter='center'}
+knitr::include_graphics("inst/ex_4factors_corr.png")
+```
+
+and the correlation matrix is
+
+```{r writecor, echo = FALSE, results='asis'}
+write_matex(ex_4factors_corr)
+```
+
+From `ex_4factors_corr`, we can easily generate random data using the `MASS` packages [@MASS].
+
+```{r gendata}
+set.seed(3)
+mydata <- MASS::mvrnorm(n = 200,
+                        mu = rep(0, ncol(ex_4factors_corr)),
+                        Sigma = ex_4factors_corr)
+```
+
+We can then carry SCFA
+
+```{r nest1}
+output <- SCFA(mydata)
+```
+
+and the results.
+
+```{r output1}
+# The number of factors
+output$ng
+
+# The factorial structure
+output$Fct
+
+# The correlation between factors
+output$CorrFct
+```
+
+Plotting, print and summary functions coming soon.
+
+<!-- We can visualize the results using the generic function `plot()`. -->
+
+<!-- ```{r plot, fig.cap="Scree plot of NEST", imgcenter='center'} -->
+<!-- res <- nest(mydata) -->
+<!-- plot(res) -->
+<!-- ``` -->
+
+<!-- The above figure shows the empirical eigenvalues in blue and the 95^th^ percentile of the sampled eigenvalues. -->
+
+<!-- It is also possible to use a correlation matrix directly. A sample size, `n` must be supplied. -->
+
+<!-- ```{r nest2} -->
+<!-- nest(ex_4factors_corr, n = 240) -->
+<!-- ``` -->
+
+<!-- The `nest()` function can use with many $\alpha$ values if desired. -->
+
+<!-- ```{r plot2, fig.cap="Scree plot of NEST with many $\\alpha$", imgcenter='center'} -->
+<!-- res <- nest(ex_4factors_corr, n = 120, alpha = c(.01,.025,.05,.1)) -->
+<!-- plot(res) -->
+<!-- ``` -->
+
+# How to cite
+
+Caron, P.-O. (2023). *SCFA: Signal Cancelling Factor Analysis*. https://github.com/quantmeth/Rnest
+
+# References

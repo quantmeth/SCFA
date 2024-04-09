@@ -27,14 +27,22 @@ asTuples <- function(AS, k){
     if(length(P) == 1){
       if(P == 0) {P <- 1}
       P <- mul[e] * P / sqrt(length(P))
-      fopt <- optim(P, fn = asCrit, method = "L-BFGS-B",
-                    lower = -10, upper = 10,
-                    G = AS$GS,
-                    combine = melange,
-                    cible = cible,
-                    control = list(maxit = 1e9,
-                                   factr = 1e-6,
-                                   pgtol = 1e-6))
+      # fopt <- optim(P, fn = asCrit, method = "L-BFGS-B",
+      #               lower = -10, upper = 10,
+      #               G = AS$GS,
+      #               combine = melange,
+      #               cible = cible,
+      #               control = list(maxit = 1e9,
+      #                              factr = 1e-6,
+      #                              pgtol = 1e-6))
+      
+      fopt <- optimize(P, f = asCrit, 
+                       interval = c(-100, 100),
+                       G = AS$GS, 
+                       combine = melange,
+                       cible = cible, tol = 1e-6)
+      names(fopt) <- c("par", "value")
+      
     } else {
       P <- mul[e] * P / sqrt(length(P))
       fopt <- optim(P, fn = asCrit, G = AS$GS, method = "Nelder-Mead",
@@ -44,30 +52,6 @@ asTuples <- function(AS, k){
                                    factr = 1e-6,
                                    pgtol = 1e-6))
     }
-    
-    # fopt <- optim(P, fn = asCrit, G = AS$GS, method = "BFGS",
-    #               combine = melange,
-    #               cible = cible,
-    #               control = list(maxit = 1e9,
-    #                              factr = 1e-6,
-    #                              pgtol = 1e-6))
-    # 
-    # 
-    # fopt <- optim(P, fn = asCrit, G = AS$GS, method = "L-BFGS-B",
-    #               lower = -10, upper = 10,
-    #               combine = melange,
-    #               cible = cible,
-    #               control = list(maxit = 1e9,
-    #                              factr = 1e-6,
-    #                              pgtol = 1e-6))
-    # 
-    # fopt <- optim(P, fn = asCrit, G = AS$GS, method = "BFGS",
-    #       #lower = -1000, upper = 1000,
-    #       combine = melange,
-    #       cible = cible,
-    #       control = list(maxit = 1e9,
-    #                      abstol = 1e-9,
-    #                      reltol = 1e-9))
     
     corr <- asCrit(fopt$par, 
                    to.opt = FALSE,

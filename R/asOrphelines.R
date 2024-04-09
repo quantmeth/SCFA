@@ -5,6 +5,8 @@ asOrphelines <- function(AS, alpha = 0.05){
   if(length(AS$orphelines) != 0){
     AS$GS[, AS$orphelines] <- 0
   }
-  AS$pertinentes <- which(z2 >= qchisq(.95^(1/(AS$nv-1)),1))
+  AS$pertinentes <- which(z2 >= qchisq((1-alpha)^(1/(AS$nv-1)), 1))
   return(AS)
 }
+
+#What if all unique?

@@ -1,5 +1,6 @@
 # Gr, GS, N, ng
 asCorrFct <- function(AS, alpha = .05){
+  if(length(AS$Gr) > 1){
   AS$CorEstim <- list()
   corr <- coBr <- matrix(0, AS$ng, AS$ng)
   for(j in 1:(AS$ng-1)){
@@ -27,5 +28,6 @@ asCorrFct <- function(AS, alpha = .05){
   corr[f] <- 0
   corr <- corr + t(corr) + diag(1, ncol = AS$ng, nrow = AS$ng)
   AS$CorFct <- corr
+  }
   return(AS)
 }
