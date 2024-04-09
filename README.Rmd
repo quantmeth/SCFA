@@ -34,7 +34,7 @@ knitr::knit_hooks$set(imgcenter = function(before, options, envir){
 
 # SCFA: Signal Cancelling Factor Analysis
 
-The library `SCFA` is an **R** implementation of the Signal Cancelling Factor Analysis (SCFA) developped by André Achim (https://osf.io/preprints/psyarxiv/h7qwg). It provides a main function `SCFA()` to carry the analysis. Currently in development.
+The library `SCFA` is an **R** implementation of the Signal Cancelling Factor Analysis (SCFA) developped by @Achim24. It provides a main function `SCFA()` to carry the analysis. Currently in development.
 
 # Installation
 
@@ -62,7 +62,7 @@ write_matex(ex_4factors_corr)
 From `ex_4factors_corr`, we can easily generate random data using the `MASS` packages [@MASS].
 
 ```{r gendata}
-set.seed(3)
+set.seed(4)
 mydata <- MASS::mvrnorm(n = 200,
                         mu = rep(0, ncol(ex_4factors_corr)),
                         Sigma = ex_4factors_corr)
@@ -84,7 +84,7 @@ output$ng
 output$Fct
 
 # The correlation between factors
-output$CorrFct
+output$CorFct
 ```
 
 Plotting, print and summary functions coming soon.
