@@ -113,6 +113,6 @@ Plotting, print and summary functions coming soon.
 
 # How to cite
 
-Caron, P.-O. (2023). *SCFA: Signal Cancelling Factor Analysis*. https://github.com/quantmeth/Rnest
+Caron, P.-O. (2023). *SCFA: Signal Cancelling Factor Analysis*. https://github.com/quantmeth/SCFA
 
 # References

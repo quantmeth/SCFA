@@ -26,7 +26,7 @@ asTuples <- function(AS, k){
     
     if(length(P) == 1){
       if(P == 0) {P <- 1}
-      P <- mul[e] * P / sqrt(length(P))
+   #   P <- mul[e] * P / sqrt(length(P))
       # fopt <- optim(P, fn = asCrit, method = "L-BFGS-B",
       #               lower = -10, upper = 10,
       #               G = AS$GS,
@@ -36,22 +36,24 @@ asTuples <- function(AS, k){
       #                              factr = 1e-6,
       #                              pgtol = 1e-6))
       
-      fopt <- optimize(P, f = asCrit, 
-                       interval = c(-100, 100),
-                       G = AS$GS, 
-                       combine = melange,
-                       cible = cible, tol = 1e-6)
-      names(fopt) <- c("par", "value")
+      # fopt <- optimize(P, f = asCrit, 
+      #                  interval = c(-10000, 10000),
+      #                  G = AS$GS, 
+      #                  combine = melange,
+      #                  cible = cible, tol = 1e-6)
+    #  names(fopt) <- c("par", "value")
       
-    } else {
+    }# else {
       P <- mul[e] * P / sqrt(length(P))
+    suppressWarnings({ 
       fopt <- optim(P, fn = asCrit, G = AS$GS, method = "Nelder-Mead",
                     combine = melange,
                     cible = cible,
                     control = list(maxit = 1e9,
                                    factr = 1e-6,
                                    pgtol = 1e-6))
-    }
+      })
+    #}
     
     corr <- asCrit(fopt$par, 
                    to.opt = FALSE,
