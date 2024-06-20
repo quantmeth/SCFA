@@ -6,7 +6,11 @@ csl: "inst/apa.csl"
 
 ```{r setup, include = FALSE, warning=FALSE, comment = FALSE}
 library(Rnest)
-library(SCFA)
+#library(SCFA)
+
+devtools::load_all(path = "D:\\Documents\\R\\SCFA")
+
+
 write_matex <- function(x) {
   begin <- "$$\\begin{bmatrix}"
   end <- "\\end{bmatrix}$$"
@@ -32,9 +36,9 @@ knitr::knit_hooks$set(imgcenter = function(before, options, envir){
 })
 ```
 
-# SCFA: Signal Cancelling Factor Analysis
+# SCFA: Signal Cancellation Factor Analysis
 
-The library `SCFA` is an **R** implementation of the Signal Cancelling Factor Analysis (SCFA) developped by @Achim24. It provides a main function `SCFA()` to carry the analysis. Currently in development.
+The library `SCFA` is an **R** implementation of the Signal Cancellation Factor Analysis (SCFA) developped by @Achim24. It provides a main function `SCFA()` to carry the analysis. Currently in development.
 
 # Installation
 
@@ -47,7 +51,7 @@ library(SCFA)
 
 # Examples
 
-Here is an example using the `ex_4factors_corr` correlation matrix from the `Rnest` library. The factor structure is
+Here is an example using the `ex_4factors_corr` correlation matrix from the `Rnest` library [@Caron24]. The factor structure is
 
 ```{r factstruct, echo = FALSE, out.height="50%", out.width="50%", imgcenter='center'}
 knitr::include_graphics("inst/ex_4factors_corr.png")
@@ -56,7 +60,13 @@ knitr::include_graphics("inst/ex_4factors_corr.png")
 and the correlation matrix is
 
 ```{r writecor, echo = FALSE, results='asis'}
-write_matex(ex_4factors_corr)
+#Rex <- sub("^(-?)0.", "\\1.", sprintf("%.2f", ex_4factors_corr))
+Rex <- ifelse(ex_4factors_corr == 0, "", sprintf("%.3f", ex_4factors_corr))
+diag(Rex) <- "1"
+#Rex <- gsub("0.", x = Rex, ".")
+Rex <- sub("^0+", "", Rex)
+write_matex(Rex)
+#write_matex(ex_4factors_corr)
 ```
 
 From `ex_4factors_corr`, we can easily generate random data using the `MASS` packages [@MASS].
@@ -78,16 +88,25 @@ and the results.
 
 ```{r output1}
 # The number of factors
-output$ng
-
-# The factorial structure
-output$Fct
-
-# The correlation between factors
-output$CorFct
+output
 ```
 
-Plotting, print and summary functions coming soon.
+The `output` variable contains everything `SCFA()` uses to compute the results. It will be simplified soon.
+
+Here is the summary.
+
+```{r output2}
+summary(output)
+```
+
+Here is the dendrogram.
+
+```{r output3}
+plot(output)
+```
+
+Even though `SCFA` did not retrieve the denominatively same factors, population `F1` is sample `F4`, `F2` is `F1`, `F3` is `F2`, and `F4` is `F3`, respectively, the very same patterns are found among the items, even for this very difficult to determine dimensionality correlation matrix.
+
 
 <!-- We can visualize the results using the generic function `plot()`. -->
 
@@ -113,6 +132,6 @@ Plotting, print and summary functions coming soon.
 
 # How to cite
 
-Caron, P.-O. (2023). *SCFA: Signal Cancelling Factor Analysis*. https://github.com/quantmeth/SCFA
+Caron, P.-O. (2024). *SCFA: Signal Cancellation Factor Analysis*. https://github.com/quantmeth/SCFA
 
 # References

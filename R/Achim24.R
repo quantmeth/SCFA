@@ -5,6 +5,7 @@
 #' doublets factors (items 13-14, 15-16), and there is two unique variables (17 and 18).
 #' Loadings range between .40 and .80.
 #'
-#' @format A 18 by 180 correlation matrix
+#' @references Achim, A. (2024, April 4). \emph{Signal cancellation factor analysis}. PsyArXiv, 1–13. \doi{10.31234/osf.io/h7qwg}
+#' @format A 18 by 18 correlation matrix
 #' @source \url{https://github.com/quantmeth}
 "Achim24"

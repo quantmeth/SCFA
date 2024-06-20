@@ -28,6 +28,8 @@ asCorrFct <- function(AS, alpha = .05){
   corr[f] <- 0
   corr <- corr + t(corr) + diag(1, ncol = AS$ng, nrow = AS$ng)
   AS$CorFct <- corr
+  } else {
+    AS$CorFct <- 1
   }
   return(AS)
 }

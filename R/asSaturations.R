@@ -11,7 +11,7 @@ asSaturations <- function(AS){
     rg <- matrix(0, n, 1)
     for(j in 1:(n-1)){
       for(k in (j+1):n){
-        if((var1[j] < 0) || (var1[k] < 0)) break
+        if((var1[j] < 0) || (var1[k] < 0)) break # INUTILE
         sat <- asSatPaire(AS, v = var1[c(j, k)])
         if(all(sat == 0)){
           # À valider ####

@@ -1,7 +1,7 @@
 
-# SCFA: Signal Cancelling Factor Analysis
+# SCFA: Signal Cancellation Factor Analysis
 
-The library `SCFA` is an **R** implementation of the Signal Cancelling
+The library `SCFA` is an **R** implementation of the Signal Cancellation
 Factor Analysis (SCFA) developped by Achim (2024, April 4). It provides
 a main function `SCFA()` to carry the analysis. Currently in
 development.
@@ -18,7 +18,7 @@ library(SCFA)
 # Examples
 
 Here is an example using the `ex_4factors_corr` correlation matrix from
-the `Rnest` library. The factor structure is
+the `Rnest` library (Caron, 2024). The factor structure is
 
 <p align="center">
 <img src="inst/ex_4factors_corr.png" width="50%" height="50%" style="display: block; margin: auto;" />
@@ -27,18 +27,18 @@ the `Rnest` library. The factor structure is
 and the correlation matrix is
 
 $$\begin{bmatrix}
-1&0.81&0.27&0.567&0.567&0.189&0&0&0&0&0&0 \\
-0.81&1&0.27&0.567&0.567&0.189&0&0&0&0&0&0 \\
-0.27&0.27&1&0.189&0.189&0.063&0&0&0&0&0&0 \\
-0.567&0.567&0.189&1&0.81&0.27&0&0&0&0&0&0 \\
-0.567&0.567&0.189&0.81&1&0.27&0&0&0&0&0&0 \\
-0.189&0.189&0.063&0.27&0.27&1&0&0&0&0&0&0 \\
-0&0&0&0&0&0&1&0.81&0.27&0.567&0.567&0.189 \\
-0&0&0&0&0&0&0.81&1&0.27&0.567&0.567&0.189 \\
-0&0&0&0&0&0&0.27&0.27&1&0.189&0.189&0.063 \\
-0&0&0&0&0&0&0.567&0.567&0.189&1&0.81&0.27 \\
-0&0&0&0&0&0&0.567&0.567&0.189&0.81&1&0.27 \\
-0&0&0&0&0&0&0.189&0.189&0.063&0.27&0.27&1 \\
+1&.810&.270&.567&.567&.189&&&&&& \\
+.810&1&.270&.567&.567&.189&&&&&& \\
+.270&.270&1&.189&.189&.063&&&&&& \\
+.567&.567&.189&1&.810&.270&&&&&& \\
+.567&.567&.189&.810&1&.270&&&&&& \\
+.189&.189&.063&.270&.270&1&&&&&& \\
+&&&&&&1&.810&.270&.567&.567&.189 \\
+&&&&&&.810&1&.270&.567&.567&.189 \\
+&&&&&&.270&.270&1&.189&.189&.063 \\
+&&&&&&.567&.567&.189&1&.810&.270 \\
+&&&&&&.567&.567&.189&.810&1&.270 \\
+&&&&&&.189&.189&.063&.270&.270&1 \\
 \end{bmatrix}$$
 
 From `ex_4factors_corr`, we can easily generate random data using the
@@ -61,42 +61,61 @@ and the results.
 
 ``` r
 # The number of factors
-output$ng
+output
 ```
 
-    ## [1] 4
+    ## Signal Cancellation Factor Analysis found 4 factors.
+
+The `output` variable contains everything `SCFA()` uses to compute the
+results. It will be simplified soon.
+
+Here is the summary.
 
 ``` r
-# The factorial structure
-output$Fct
+summary(output)
 ```
 
-    ##            [,1]      [,2]      [,3]      [,4]
-    ##  [1,] 0.0000000 0.0000000 0.0000000 0.9475771
-    ##  [2,] 0.0000000 0.0000000 0.0000000 0.7999968
-    ##  [3,] 0.0000000 0.0000000 0.0000000 0.3682050
-    ##  [4,] 1.0648506 0.0000000 0.0000000 0.0000000
-    ##  [5,] 0.8807150 0.0000000 0.0000000 0.0000000
-    ##  [6,] 0.1883421 0.0000000 0.0000000 0.0000000
-    ##  [7,] 0.0000000 0.9408338 0.0000000 0.0000000
-    ##  [8,] 0.0000000 0.7878626 0.0000000 0.0000000
-    ##  [9,] 0.0000000 0.2713004 0.0000000 0.0000000
-    ## [10,] 0.0000000 0.0000000 0.9350918 0.0000000
-    ## [11,] 0.0000000 0.0000000 0.8844697 0.0000000
-    ## [12,] 0.0000000 0.0000000 0.2806946 0.0000000
+    ##  Correlations between factors: 
+    ##    F1     F2     F3     F4    
+    ## F1  1.000                     
+    ## F2         1.000              
+    ## F3         0.718  1.000       
+    ## F4  0.672                1.000
+    ## 
+    ##  Loadings: 
+    ##     F1    F2    F3    F4   
+    ## i1                    0.881
+    ## i2                    0.890
+    ## i3                    0.356
+    ## i4  0.944                  
+    ## i5  0.868                  
+    ## i6  0.218                  
+    ## i7        0.908            
+    ## i8        0.867            
+    ## i9        0.268            
+    ## i10             0.865      
+    ## i11             0.924      
+    ## i12             0.294      
+    ## 
+    ##   Fit indices: 
+    ##      npar     chisq        df    pvalue       cfi       tli      logl       aic 
+    ##    30.000    39.959    48.000     0.789     1.000     1.011 -2862.416  5784.833 
+    ##       bic     rmsea      srmr 
+    ##  5883.782     0.000     0.030
+
+Here is the dendrogram.
 
 ``` r
-# The correlation between factors
-output$CorFct
+plot(output)
 ```
 
-    ##           [,1]      [,2]      [,3]      [,4]
-    ## [1,] 1.0000000 0.0000000 0.0000000 0.6723476
-    ## [2,] 0.0000000 1.0000000 0.7169519 0.0000000
-    ## [3,] 0.0000000 0.7169519 1.0000000 0.0000000
-    ## [4,] 0.6723476 0.0000000 0.0000000 1.0000000
+<img src="README_files/figure-gfm/output3-1.png" style="display: block; margin: auto;" />
 
-Plotting, print and summary functions coming soon.
+Even though `SCFA` did not retrieve the denominatively same factors,
+population `F1` is sample `F4`, `F2` is `F1`, `F3` is `F2`, and `F4` is
+`F3`, respectively, the very same patterns are found among the items,
+even for this very difficult to determine dimensionality correlation
+matrix.
 
 <!-- We can visualize the results using the generic function `plot()`. -->
 <!-- ```{r plot, fig.cap="Scree plot of NEST", imgcenter='center'} -->
@@ -116,8 +135,8 @@ Plotting, print and summary functions coming soon.
 
 # How to cite
 
-Caron, P.-O. (2023). *SCFA: Signal Cancelling Factor Analysis*.
-<https://github.com/quantmeth/Rnest>
+Caron, P.-O. (2024). *SCFA: Signal Cancellation Factor Analysis*.
+<https://github.com/quantmeth/SCFA>
 
 # References
 
@@ -128,6 +147,13 @@ line-spacing="2">
 
 Achim, A. (2024, April 4). Signal cancellation factor analysis.
 *PsyArXiv*, 1–13. <https://doi.org/10.31234/osf.io/h7qwg>
+
+</div>
+
+<div id="ref-Caron24" class="csl-entry">
+
+Caron, P.-O. (2024). *Rnest : An R package for the Next Eigenvalue
+Sufficiency Tests (NEST)*. <https://github.com/quantmeth/Rnest>
 
 </div>
 

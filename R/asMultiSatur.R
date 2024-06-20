@@ -1,11 +1,11 @@
 asMultiSatur <- function(AS, np, alpha = .05){
   if(length(AS$reste)>0){
     nv <- AS$nv
-    C <- t(combn(AS$Var, 2))
+    C <- t(combn(AS$Var, np)) #np
     nc <- nrow(C)
     Crit <- matrix(0, nc, 1)
     Corr <- matrix(0, nv, nc)
-    P <- matrix(0, nc, 2) #np
+    P <- matrix(0, nc, np) #np
     G <- AS$GS
     prob <- matrix(0, nc, 1)
     
@@ -16,14 +16,14 @@ asMultiSatur <- function(AS, np, alpha = .05){
       Crit[j] <- AS$tmp$Crit
       P[j,] <- AS$tmp$Poids
       Corr[,j] <- AS$tmp$Corr
-      prob[j] <- pchisq(Crit[j]*(AS$N-1), length(cible) , lower.tail = FALSE)
+      prob[j] <- pchisq(Crit[j] * (AS$N - 1), length(cible) , lower.tail = FALSE)
     }
     
     Crit <- Crit * (AS$N-1)
     z2 <- Corr^2 * (AS$N-1)
     f <- which(prob == max(prob))[1]
     if((length(f) == 0) || (prob[f] < .05) || (max(z2[,f]) > qchisq(1-alpha,1))){
-      
+      #sum(z2[,f]) >  qchisq(1-alpha,length(cible))
       AS$reste[1] <- -AS$reste[1]
       
     } else {
@@ -47,7 +47,7 @@ asMultiSatur <- function(AS, np, alpha = .05){
           Po <- AS$tmp$Poids
           Co <- AS$tmp$Corr
           #if(all(abs(log10(Po))>10)) break
-          if(all(log10(abs(Po))>10)) break
+          if(all(abs(log10(abs(Po)))>10)) break
           CritTuple[f] <- Co %*% t(Co) * (AS$N - 1)
           saturTuple[f,] <- Po * rowSums(AS$Fct[melange[1:np],])
         }
