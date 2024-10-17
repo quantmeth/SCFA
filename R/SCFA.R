@@ -41,9 +41,7 @@ SCFA <- function(R, N = NULL, alpha = .05, factors.only = FALSE){
     # à checker
     
     # if factors.only = TRUE
-    fct <- NULL
-    CorFct <- NULL
-    
+
     if(!factors.only){
       AS$Fct <- matrix(0, AS$nv, AS$ng)
       AS <- asSaturations(AS)
@@ -56,23 +54,33 @@ SCFA <- function(R, N = NULL, alpha = .05, factors.only = FALSE){
       # fct CorFct, ng, dist, orpheline
       fct <- AS$Fct
       CorFct <- AS$CorFct
-      colnames(fct) <- paste0("F", 1:AS$ng)
-      rownames(fct) <- rownames(AS$R)
-      rownames(CorFct) <- colnames(CorFct) <- colnames(fct)
-    
+      colnames(AS$Fct) <- paste0("F", 1:AS$ng)
+      rownames(AS$Fct) <- rownames(AS$R)
+      rownames(AS$CorFct) <- colnames(AS$CorFct) <- colnames(AS$Fct)
+      
+    } else{
+      
+      AS$Fct <- NULL
+      AS$CorFct <- NULL
+      
     }
   }
-  out <- list(nfactors = AS$ng,
-              loadings = fct,
-              corr.fact = CorFct,
-              unique.variable = AS$orpheline,
-              dist = AS$dist) 
+  # To implement ?
+  # out <- list(nfactors = AS$ng,
+  #            loadings = fct,
+  #            corr.fact = CorFct,
+  #            unique.variable = AS$orpheline,
+  #            dist = AS$dist)
+  ####
+  
   # alpha? (not sure) 
   # x2crit (yes for plot)? 
   # Z for plot
   # N (for summary) 
   # R for summary
+  
   out <- structure(AS, class = "SCFA") # out
+  
   return(out)
 }
 
